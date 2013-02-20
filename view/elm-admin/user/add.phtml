@@ -1,0 +1,64 @@
+<?php include '_adminHeader.phtml'; ?>
+<!-- Deal with filter form -->
+<?php 
+$form->prepare();
+$form->setAttribute('action', $url . '/admin/add');
+$form->setAttribute('method', 'post');
+echo $this->form()->openTag($form);
+?>
+<div class="form_element">
+<?php 
+    $email = $form->get('email');
+    echo $this->formLabel($email);
+    echo $this->formInput($email);
+    echo $this->formElementErrors($email);
+?>
+</div>
+<div class="form_element">
+<?php 
+    $status = $form->get('status');
+    echo $this->formLabel($status);
+    echo $this->formInput($status);
+    echo $this->formElementErrors($status);
+?>
+</div>
+<div class="form_element">
+<?php 
+    $realName = $form->get('realName');
+    echo $this->formLabel($realName);
+    echo $this->formInput($realName);
+    echo $this->formElementErrors($realName);
+?>
+</div>
+<div class="form_element">
+<?php 
+    $password = $form->get('password');
+    echo $this->formLabel($password);
+    echo $this->formInput($password);
+    echo $this->formElementErrors($password);
+?>
+</div>
+<div class="form_element">
+<?php 
+    $preferences = $form->get('preferences');
+    echo $this->formLabel($preferences);
+    echo $this->formInput($preferences);
+    echo $this->formElementErrors($preferences);
+?>
+</div>
+<p>&nbsp;</p>
+<div class="form_element">
+<?php 
+    $submit = $form->get('submit');
+    echo $this->formElement($submit);
+?>
+</div>
+<?php echo $this->form()->closeTag($form); ?>
+<div class="end_row">
+<hr />
+<?php echo $message; ?>
+<br />Form Data Submitted:
+<pre>
+<?php $this->escapeHtml(var_dump($data)); ?>
+</pre>
+</div>

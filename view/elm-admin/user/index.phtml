@@ -1,0 +1,28 @@
+<?php include '_adminHeader.phtml'; ?>
+<table class="table-bordered">
+<tr class="yellow-table-header-row"><th>Name</th><th>Status</th><th>Email</th></tr>
+<?php foreach ($users as $row) : ?>
+<tr>
+<td><img src="images/p-icon.png" width="30px" height="30px"><?php echo $row['real_name'];?></td>
+<td>
+	<?php 
+	switch ($row['status']) {
+		case 2 : $color = 'orange'; break;
+		case 1 : $color = 'green'; break;
+		default: $color = 'gray';
+	}
+	?>
+	<img src="images/button_user_<?php echo $color; ?>.png" width="30px" height="30px"><?php echo $row['status'];?>
+</td>
+<td><img src="images/email-sign.png"><?php echo $row['email'];?></td>
+</tr>
+<?php endforeach; ?>
+</table>
+<table width="50%">
+<tr>
+<td><h4>Key</h4></td>
+<td><img src="images/button_user_orange.png" width="30px" height="30px"></td><td>admin</td>
+<td><img src="images/button_user_green.png" width="30px" height="30px"></td><td>registered user</td>
+<td><img src="images/button_user_gray.png" width="30px" height="30px"></td><td>guest / unconfirmed</td>
+</tr>
+</table>

@@ -9,12 +9,8 @@ namespace ElmAdmin\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Zend\Form;
-use ElmAdmin\Service\UserService;
+use ElmAdmin\Model\User;
 use ElmAdmin\Form\UserInfoForm;
-use ElmAdmin\Form\UserInfoFilter;
-use ElmAdmin\Form\UserDeleteForm;
-use ElmAdmin\Form\UserDeleteFilter;
-use ElmAdmin\Model\UsersTable;
 
 class UserController extends AbstractActionController
 {
@@ -23,7 +19,7 @@ class UserController extends AbstractActionController
 	 * Represents a Zend\Db\Tablegateway\Tablegateway model
 	 * @var ElmAdmin\Model\UsersTable
 	 */
-	protected $_usersTable;
+	protected $usersTable;
 
 	/**
 	 * Lists users
@@ -31,9 +27,43 @@ class UserController extends AbstractActionController
 	 */
 	public function indexAction()
     {
-    	$userService = new UserService($this->_usersTable);
-    	$users = $userService->getAllUsers();
-        return new ViewModel(array('users' => $users));
+    	$users = $this->getUsersTable()->fetchAll();
+    	
+    	// Build up the list json
+    	$jsonArray = array(
+    	    'headers' => array('Name', 'Email', 'Company', 'Role', 'Actions')
+    	);
+        $usersArray = array();
+    	foreach($users as $user) {
+    	    $usersArray[] = array(
+    	            'rowId' => $user->id,
+    	            'cells' => array(
+    	                        array("value" => $user->first_name . ' ' . $user->last_name,
+    	                              "type" => 'string'),
+    	                        array("value" => $user->email,
+    	                              'type' => 'string'),
+    	                        array('value' => $user->company,
+    	                              'type' => 'string'),
+    	                        array('value' => $user->role,
+    	                              'type' => 'string'),
+    	                        array('type' => 'actions',
+    	                               'actions' => array(
+    	                    array('url' => '/elements/admin/user/edit/'.$user->id,
+    	                            'type' => 'btn-warning edit',
+    	                            'text' => 'Edit'),
+    	                    array('url' => '/elements/admin/user/delete/'.$user->id,
+    	                            'type' => 'btn-danger delete',
+    	                            'text' => 'Delete')
+    	                                       )
+    	                                )
+    	            )
+    	     );
+    	}
+    	$jsonArray['data'] = $usersArray;
+  
+    	$view = new ViewModel(array('data' => json_encode($jsonArray)));
+    	$view->setTemplate('elm-content/item/list.phtml');
+        return $view;
     }
 
     /**
@@ -78,35 +108,66 @@ class UserController extends AbstractActionController
     {
     	$message = '';
     	$data = '';
-    	$request = $this->getRequest();
     	$form = new UserInfoForm();
-    	$form->prepareElements();
+    	$form->get('submit')->setValue('Add');
+    	
+    	$request = $this->getRequest();
     	if ($request->isPost()) {
-    		$filter = new UserInfoFilter();
-    		$inputFilter = $filter->prepareFilters();
-    		$form->setInputFilter($inputFilter);
-    		$form->setData($request->getPost());
-    		if ($form->isValid()) {
-    			$userService = new UserService($this->_usersTable);
-    			$data = $inputFilter->getValues();
-    			$message = $userService->addUser($data);
-    		} else {
-    			$data = $request->getPost();
-    		}
+    	    $user = new User();
+    	    $form->setInputFilter($user->getInputFilter());
+    	    $form->setData($request->getPost());
+    	
+    	    if ($form->isValid()) {
+    	        $user->exchangeArray($form->getData());
+    	        $this->getUsersTable()->saveUser($user);
+    	
+    	        // Redirect to list of albums
+    	        return $this->redirect()->toRoute('admin-home');
+    	    }
     	}
+    	
         return new ViewModel(array('form' => $form, 'data' => $data, 'message' => $message));
     }
+    
+    public function editAction()
+    {
+        $message = '';
+        $data = '';
+        $request = $this->getRequest();
+        $id = (int)$this->getEvent()->getRouteMatch()->getParam('id');
+        if (!$id) {
+            return $this->redirect()->toRoute('admin', array('action'=>'add'));
+        }
+        $user = $this->getUsersTable()->getUser($id);
+        $form = new UserInfoForm();
+        $form->bind($user);
+        $form->get('submit')->setAttribute('value', 'Edit');
 
-    /**
-     * Called via DI from module.config.php
-     * @param \ElmAdmin\Model\UsersTable $usersTable
-     * @return \ElmAdmin\Controller\IndexController
-     */
-	public function setUsersTable(UsersTable $usersTable)
-	{
-		$this->_usersTable = $usersTable;
-		return $this;
-	}
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $form->setInputFilter($user->getInputFilter());
+            $form->setData($request->getPost());
+
+            if ($form->isValid()) {
+                $this->getUsersTable()->saveUser($form->getData());
+
+                // Redirect to list of albums
+                return $this->redirect()->toRoute('admin-home');
+            }
+        } else {
+            $data = $request->getPost();
+        }
+        return new ViewModel(array('id' => $id, 'form' => $form, 'data' => $data, 'message' => $message));
+    }
+
+    public function getUsersTable()
+    {
+        if (!$this->usersTable) {
+            $sm = $this->getServiceLocator();
+            $this->usersTable = $sm->get('ElmAdmin\Model\UsersTable');
+        }
+        return $this->usersTable;
+    }
 	
 }
 

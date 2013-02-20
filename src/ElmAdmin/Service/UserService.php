@@ -18,6 +18,14 @@ class UserService
 		$this->_cols = $this->_usersTable->getColumnNames();
 	}
 	
+	public function exchangeArray($data)
+	{
+	    $this->id     = (isset($data['id']))     ? $data['id']     : null;
+	    $this->artist = (isset($data['artist'])) ? $data['artist'] : null;
+	    $this->title  = (isset($data['title']))  ? $data['title']  : null;
+	}
+	
+	
 	/**
 	 * Returns an array consisting of database rows
 	 * @return array $result 
@@ -28,6 +36,32 @@ class UserService
 		$select->from($this->_usersTable->getTableName())->order($this->_cols['email']);
 		$result = $this->_usersTable->selectWith($select);
 		return $result->toArray();
+	}
+	
+	/**
+	 * Returns as single user. 
+	 * @param int $id
+	 * @return array $result
+	 *
+	 */
+	public function getUser($id)
+	{
+	    /*
+	    $select = new Select();
+	    $where = new Where();
+	    $where->equalTo($this->_cols['id'], $id);
+	    $select->from($this->_usersTable->getTableName())->where($where);
+	    $result = $this->_usersTable->selectWith($select);
+	    return $result;
+	    */
+	    
+	    $id  = (int) $id;
+	    $rowset = $this->_usersTable->getTableName()->select(array('id' => $id));
+	    $row = $rowset->current();
+	    if (!$row) {
+	        throw new \Exception("Could not find row $id");
+	    }
+	    return $row;
 	}
 
 	/**

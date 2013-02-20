@@ -9,14 +9,10 @@ $config = array(
 	        'password' 	=> 'root',
     ),
     */
-	'service_manager' => array(
-		'factories' => array(
-			'admin-users-table' => 'ElmAdmin\Service\UsersTableFactory',
-		)
-	),
+	
 	'controllers' => array(
-        'factories' => array(
-            'admin-index' => 'ElmAdmin\Service\UserControllerFactory',
+        'invokables' => array(
+            'admin-index' => 'ElmAdmin\Controller\UserController',
         ),
     ),
 	'router' => array(
@@ -24,10 +20,11 @@ $config = array(
             'admin' => array(
                 'type'    => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/elements/admin/user[/:action]',
+                    'route'    => '/elements/admin/user[/:action][/:id]',
                     'constraints' => array(
                         'controller' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'action' 	 => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id' => '[0-9]*'
                     ),
                     'defaults' => array(
                         'controller' => 'admin-index',

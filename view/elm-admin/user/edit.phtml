@@ -3,7 +3,13 @@
 <?php
 $form = $this->form;
 $form->setAttribute('class', 'form-horizontal');
-$form->setAttribute('action', $this->url('admin', array('action' => 'add')));
+$form->setAttribute('action', $this->url(
+    'admin',
+    array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    )
+));
 $form->prepare();
 echo $this->form()->openTag($form);
 echo '<div class="control-group">';

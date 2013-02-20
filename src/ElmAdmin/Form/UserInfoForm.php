@@ -6,36 +6,29 @@ use Zend\Form\Element;
 
 class UserInfoForm extends Form
 {
-	public function prepareElements()
-	{
+	public function __construct($name = null)
+    {
+        // we want to ignore the name passed
+        parent::__construct('user');
+        
 		$email = new Element\Text('email');
 		$email->setLabel('Email');
 
-		$status = new Element\Select('status');
-		$status->setLabel('Status')
-			   ->setOptions(array('options' => array('0' => 'Unconfirmed', '1' => 'Normal', '2' => 'Admin')));
+		$role = new Element\Select('role');
+		$role->setLabel('Role')
+			   ->setOptions(array('options' => array('user' => 'user', 'admin' => 'admin')));
 		
-		$realName = new Element\Text('realName');
-		$realName->setLabel('Real Name')
-				 ->setAttributes(array('maxlength' => 128, 'size' => 40));
 		
 		$password = new Element\Password('password');
 		$password->setLabel('Password')
 				 ->setAttributes(array('maxlength' => 128, 'size' => 40));
 		
-		$preferences = new Element\Text('preferences');
-		$preferences->setLabel('Preferences')
-					->setAttributes(array('title' 		=> 'Separate multiple preferences with a ";"',
-            							  'maxlength' 	=> 254,
-            							  'size'		=> 40,));
 		$submit = new Element\Submit('submit');
-		$submit->setAttribute('value', 'Add/Update');
+		$submit->setAttribute('value', 'Edit');
 
 		$this->add($email)
-			 ->add($status)
-			 ->add($realName)
+			 ->add($role)
 			 ->add($password)
-			 ->add($preferences)
 			 ->add($submit);
 	}
 }

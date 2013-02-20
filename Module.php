@@ -4,6 +4,10 @@ namespace ElmAdmin;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use ElmAdmin\Controller;
+use ElmAdmin\Model\User;
+use ElmAdmin\Model\UsersTable;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -37,7 +41,21 @@ class Module implements AutoloaderProviderInterface
      */
     public function getServiceConfig()
     {
-        return array();
+        return array(
+                'factories' => array(
+                        'ElmAdmin\Model\UsersTable' =>  function($sm) {
+                            $tableGateway = $sm->get('UsersTableGateway');
+                            $table = new UsersTable($tableGateway);
+                            return $table;
+                        },
+                        'UsersTableGateway' => function ($sm) {
+                            $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                            $resultSetPrototype = new ResultSet();
+                            $resultSetPrototype->setArrayObjectPrototype(new User());
+                            return new TableGateway('users-e3', $dbAdapter, null, $resultSetPrototype);
+                        },
+                ),
+        );
     }
 
     /**

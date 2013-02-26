@@ -122,7 +122,7 @@ class UserController extends AbstractActionController
     	        $this->getUsersTable()->saveUser($user);
     	
     	        // Redirect to list of albums
-    	        return $this->redirect()->toRoute('admin-home');
+    	        return $this->redirect()->toRoute('admin-user');
     	    }
     	}
     	
@@ -152,7 +152,7 @@ class UserController extends AbstractActionController
                 $this->getUsersTable()->saveUser($form->getData());
 
                 // Redirect to list of albums
-                return $this->redirect()->toRoute('admin-home');
+                return $this->redirect()->toRoute('admin-user');
             }
         } else {
             $data = $request->getPost();

@@ -6,6 +6,8 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use ElmAdmin\Controller;
 use ElmAdmin\Model\User;
 use ElmAdmin\Model\UsersTable;
+use ElmAdmin\Model\Group;
+use ElmAdmin\Model\GroupsTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -53,6 +55,17 @@ class Module implements AutoloaderProviderInterface
                             $resultSetPrototype = new ResultSet();
                             $resultSetPrototype->setArrayObjectPrototype(new User());
                             return new TableGateway('users-e3', $dbAdapter, null, $resultSetPrototype);
+                        },
+                        'ElmAdmin\Model\GroupsTable' =>  function($sm) {
+                            $tableGateway = $sm->get('GroupsTableGateway');
+                            $table = new GroupsTable($tableGateway);
+                            return $table;
+                        },
+                        'GroupsTableGateway' => function ($sm) {
+                            $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                            $resultSetPrototype = new ResultSet();
+                            $resultSetPrototype->setArrayObjectPrototype(new Group());
+                            return new TableGateway('groups', $dbAdapter, null, $resultSetPrototype);
                         },
                 ),
         );

@@ -1,0 +1,50 @@
+<br />
+<br />
+<?php
+$form = $this->form;
+$form->setAttribute('class', 'form-horizontal');
+$form->setAttribute('action', $this->url(
+    'admin-group',
+    array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    )
+));
+$form->prepare();
+echo $this->form()->openTag($form);
+echo '<div class="control-group">';
+//echo $this->formCollection($form); // use default ZF2 markup
+// ...loop through and render the form elements...
+foreach ($form as $element) {
+	$attribs = $element->getAttributes();
+	switch($attribs['type']) {
+		case 'hidden':
+			echo $this->formHidden($element);
+			break;
+			
+		case 'submit':
+			echo $this->formSubmit($element);
+			break;
+			
+		default: 
+			echo '<div class="control-group">';
+			echo '<label id="'.$element->getName().'-label">
+					<label for="'.$element->getName().'" class="control-label optional">'.$element->getLabel().'</label></label>';
+			echo '<div class="controls">';
+			echo $this->formElement($element);       // <-- Magic!
+			// Set description if available
+			$options = $element->getOptions();
+			$description = (isset($options['description'])) ? $options['description'] : '';
+			echo '<p class="hint">'.$description.'</p>';
+			echo $this->formElementErrors($element);
+			echo '</div>';
+			echo '</div>';
+			break;
+	}
+}
+echo '</div>';
+?>
+<br />Form Data Submitted:
+<pre>
+<?php $this->escapeHtml(var_dump($data)); ?>
+</pre>

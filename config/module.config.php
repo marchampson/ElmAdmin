@@ -12,7 +12,8 @@ $config = array(
 	
 	'controllers' => array(
         'invokables' => array(
-            'admin-index' => 'ElmAdmin\Controller\UserController',
+            'admin-user' => 'ElmAdmin\Controller\UserController',
+            'admin-group' => 'ElmAdmin\Controller\GroupController',
         ),
     ),
 	'router' => array(
@@ -32,15 +33,33 @@ $config = array(
                     ),
                 ),
             ),
-            'admin-home' => array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route'    => '/elements/admin/user',
-                    'defaults' => array(
-                        'controller' => 'admin-index',
-                        'action'     => 'index',
-                    ),
-                ),
+            'admin-user' => array(
+                    'type' => 'segment',
+                    'options' => array(
+                            'route' => '/elements/admin/user[/:action][/:id]',
+                            'constraints' => array(
+                                    'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                    'id' => '[0-9]+'
+                            ),
+                            'defaults' => array(
+                                    'controller' => 'admin-user',
+                                    'action' => 'index'
+                            )
+                    )
+            ),
+            'admin-group' => array(
+                    'type' => 'segment',
+                    'options' => array(
+                            'route' => '/elements/admin/group[/:action][/:id]',
+                            'constraints' => array(
+                                    'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                    'id' => '[0-9]+'
+                            ),
+                            'defaults' => array(
+                                    'controller' => 'admin-group',
+                                    'action' => 'index'
+                            )
+                    )
             ),
         ),
     ),

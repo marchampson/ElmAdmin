@@ -6,26 +6,31 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
-class User implements InputFilterAwareInterface
+class Group implements InputFilterAwareInterface
 {
 	public $id;
-	public $company;
-	public $first_name;
-	public $last_name;
-	public $email;
-	public $password;
-	public $role;
+	public $type;
+	public $name;
+	public $address1;
+	public $address2;
+	public $town;
+	public $county;
+	public $postcode;
+	public $country;
+	
 	protected $inputFilter;
 	
 	public function exchangeArray($data)
 	{
 	    $this->id     = (isset($data['id']))     ? $data['id']     : null;
-	    $this->company = (isset($data['company'])) ? $data['company'] : null;
-	    $this->first_name  = (isset($data['first_name']))  ? $data['first_name']  : null;
-	    $this->last_name  = (isset($data['last_name']))  ? $data['last_name']  : null;
-	    $this->email  = (isset($data['email']))  ? $data['email']  : null;
-	    $this->password  = (isset($data['password']))  ? $data['password']  : null;
-	    $this->role  = (isset($data['role']))  ? $data['role']  : null;
+	    $this->type = (isset($data['type'])) ? $data['type'] : null;
+	    $this->name  = (isset($data['name']))  ? $data['name']  : null;
+	    $this->address1  = (isset($data['address1']))  ? $data['address1']  : null;
+	    $this->address2  = (isset($data['address2']))  ? $data['address2']  : null;
+	    $this->town  = (isset($data['town']))  ? $data['town']  : null;
+	    $this->county  = (isset($data['county']))  ? $data['county']  : null;
+	    $this->postcode  = (isset($data['postcode']))  ? $data['postcode']  : null;
+	    $this->country  = (isset($data['country']))  ? $data['country']  : null;
 	}
 	
 	public function getArrayCopy()

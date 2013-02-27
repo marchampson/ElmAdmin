@@ -9,7 +9,7 @@ use Zend\InputFilter\InputFilterInterface;
 class User implements InputFilterAwareInterface
 {
 	public $id;
-	public $company;
+	public $group_id;
 	public $first_name;
 	public $last_name;
 	public $email;
@@ -20,7 +20,7 @@ class User implements InputFilterAwareInterface
 	public function exchangeArray($data)
 	{
 	    $this->id     = (isset($data['id']))     ? $data['id']     : null;
-	    $this->company = (isset($data['company'])) ? $data['company'] : null;
+	    $this->group_id = (isset($data['group_id'])) ? $data['group_id'] : null;
 	    $this->first_name  = (isset($data['first_name']))  ? $data['first_name']  : null;
 	    $this->last_name  = (isset($data['last_name']))  ? $data['last_name']  : null;
 	    $this->email  = (isset($data['email']))  ? $data['email']  : null;
@@ -47,6 +47,14 @@ class User implements InputFilterAwareInterface
 	        $inputFilter->add($factory->createInput(array(
 	                'name'     => 'id',
 	                'required' => true,
+	                'filters'  => array(
+	                        array('name' => 'Int'),
+	                ),
+	        )));
+	        
+	        $inputFilter->add($factory->createInput(array(
+	                'name'     => 'group_id',
+	                'required' => false,
 	                'filters'  => array(
 	                        array('name' => 'Int'),
 	                ),

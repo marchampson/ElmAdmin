@@ -31,7 +31,7 @@ class UsersTable
     public function saveUser(User $user)
     {
         $data = array(
-                'company' => $user->company,
+                'group_id' => $user->group_id,
                 'first_name' => $user->first_name,
                 'last_name' => $user->last_name,
                 'email' => $user->email,

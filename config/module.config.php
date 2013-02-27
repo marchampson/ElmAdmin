@@ -16,6 +16,12 @@ $config = array(
             'admin-group' => 'ElmAdmin\Controller\GroupController',
         ),
     ),
+        
+    'service_manager' => array (
+            'invokables' => array (
+                    'groupsService' => 'ElmAdmin\Service\GroupsService',
+            )
+    ),
 	'router' => array(
         'routes' => array(
             'admin' => array(

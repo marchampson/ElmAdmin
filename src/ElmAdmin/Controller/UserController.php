@@ -11,6 +11,7 @@ use Zend\View\Model\ViewModel;
 use Zend\Form;
 use ElmAdmin\Model\User;
 use ElmAdmin\Form\UserInfoForm;
+use ElmAdmin;
 
 class UserController extends AbstractActionController
 {
@@ -42,7 +43,7 @@ class UserController extends AbstractActionController
     	                              "type" => 'string'),
     	                        array("value" => $user->email,
     	                              'type' => 'string'),
-    	                        array('value' => $user->company,
+    	                        array('value' => $user->group_id,
     	                              'type' => 'string'),
     	                        array('value' => $user->role,
     	                              'type' => 'string'),
@@ -108,7 +109,7 @@ class UserController extends AbstractActionController
     {
     	$message = '';
     	$data = '';
-    	$form = new UserInfoForm();
+    	$form = $this->getServiceLocator()->get('ElmAdmin\Form\UserInfoForm');
     	$form->get('submit')->setValue('Add');
     	
     	$request = $this->getRequest();
@@ -139,8 +140,11 @@ class UserController extends AbstractActionController
             return $this->redirect()->toRoute('admin', array('action'=>'add'));
         }
         $user = $this->getUsersTable()->getUser($id);
-        $form = new UserInfoForm();
+        $form = $this->getServiceLocator()->get('ElmAdmin\Form\UserInfoForm');
         $form->bind($user);
+        // Passwords are md5 encrypted so remove from the edit field
+        // Changes are handled by the user in a different process.
+        $form->remove('password');
         $form->get('submit')->setAttribute('value', 'Edit');
 
         $request = $this->getRequest();

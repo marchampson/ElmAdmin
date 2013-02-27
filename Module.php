@@ -54,7 +54,7 @@ class Module implements AutoloaderProviderInterface
                             $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                             $resultSetPrototype = new ResultSet();
                             $resultSetPrototype->setArrayObjectPrototype(new User());
-                            return new TableGateway('users-e3', $dbAdapter, null, $resultSetPrototype);
+                            return new TableGateway('users', $dbAdapter, null, $resultSetPrototype);
                         },
                         'ElmAdmin\Model\GroupsTable' =>  function($sm) {
                             $tableGateway = $sm->get('GroupsTableGateway');
@@ -66,6 +66,14 @@ class Module implements AutoloaderProviderInterface
                             $resultSetPrototype = new ResultSet();
                             $resultSetPrototype->setArrayObjectPrototype(new Group());
                             return new TableGateway('groups', $dbAdapter, null, $resultSetPrototype);
+                        },
+                        'ElmAdmin\Form\UserInfoForm' => function ($sm) {
+                            $groupsService = $sm->get('groupsService');
+                            $form    = new Form\UserInfoForm;
+                            $form->setGroupsService($groupsService);
+                        
+                        
+                            return $form;
                         },
                 ),
         );

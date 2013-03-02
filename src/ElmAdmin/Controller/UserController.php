@@ -12,6 +12,8 @@ use Zend\Form;
 use ElmAdmin\Model\User;
 use ElmAdmin\Form\UserInfoForm;
 use ElmAdmin;
+use Zend\Mail\Message as Message;
+use Zend\Mail\Transport\Sendmail;
 
 class UserController extends AbstractActionController
 {
@@ -121,8 +123,18 @@ class UserController extends AbstractActionController
     	    if ($form->isValid()) {
     	        $user->exchangeArray($form->getData());
     	        $this->getUsersTable()->saveUser($user);
+    	        
+    	        // Send new user an email:
+    	        $message = new Message();
+    	        $link = 'http://'.$_SERVER['HTTP_HOST'] . '/elements/login';
+    	        $message->setBody("You are receiving this email because a user has been set up to access Elements. Your login details are:\n\nEmail: {$user->email}\n\nPassword: {$user->password}\n\nPlease go to:\n\n $link\n\n to log in\n\n");
+    	        $message->setFrom('noreply@elements-cms.com', 'Elements CMS');
+    	        $message->addTo($user->email);
+    	        $message->setSubject('New user account on Elements CMS');
+    	        $transport = new Sendmail();
+    	        $transport->send($message);
     	
-    	        // Redirect to list of albums
+    	        // Redirect to list of users
     	        return $this->redirect()->toRoute('admin-user');
     	    }
     	}

@@ -14,17 +14,21 @@ class User implements InputFilterAwareInterface
 	public $last_name;
 	public $email;
 	public $password;
+	public $phone;
+	public $extension;
 	public $role;
 	protected $inputFilter;
 	
 	public function exchangeArray($data)
 	{
-	    $this->id     = (isset($data['id']))     ? $data['id']     : null;
+	    $this->id     = (isset($data['id']))     ? $data['id'] : null;
 	    $this->group_id = (isset($data['group_id'])) ? $data['group_id'] : null;
 	    $this->first_name  = (isset($data['first_name']))  ? $data['first_name']  : null;
-	    $this->last_name  = (isset($data['last_name']))  ? $data['last_name']  : null;
+	    $this->last_name  = (isset($data['last_name']))  ? $data['last_name'] : null;
 	    $this->email  = (isset($data['email']))  ? $data['email']  : null;
 	    $this->password  = (isset($data['password']))  ? $data['password']  : null;
+	    $this->phone  = (isset($data['phone']))  ? $data['phone']  : null;
+	    $this->extension  = (isset($data['extension']))  ? $data['extension']  : null;
 	    $this->role  = (isset($data['role']))  ? $data['role']  : null;
 	}
 	

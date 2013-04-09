@@ -65,7 +65,7 @@ class UserController extends AbstractActionController
     	$jsonArray['data'] = $usersArray;
   
     	$view = new ViewModel(array('data' => json_encode($jsonArray)));
-    	$view->setTemplate('elm-content/item/list.phtml');
+
         return $view;
     }
 

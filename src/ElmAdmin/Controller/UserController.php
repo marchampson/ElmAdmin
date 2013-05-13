@@ -122,15 +122,31 @@ class UserController extends AbstractActionController
     	        $user->exchangeArray($form->getData());
     	        $this->getUsersTable()->saveUser($user);
     	        
-    	        // Send new user an email:
-    	        $message = new Message();
-    	        $link = 'http://'.$_SERVER['HTTP_HOST'] . '/elements/login';
-    	        $message->setBody("You are receiving this email because a user has been set up to access Elements. Your login details are:\n\nEmail: {$user->email}\n\nPassword: {$user->password}\n\nPlease go to:\n\n $link\n\n to log in\n\n");
-    	        $message->setFrom('noreply@elements-cms.com', 'Elements CMS');
-    	        $message->addTo($user->email);
-    	        $message->setSubject('New user account on Elements CMS');
-    	        $transport = new Sendmail();
-    	        $transport->send($message);
+    	        if($user->role != 'account') {
+    	            // Send new user an email:
+    	            $message = new Message();
+    	            $link = 'http://'.$_SERVER['HTTP_HOST'] . '/elements/login';
+    	            $message->setBody("You are receiving this email because a user has been set up to access Elements. Your login details are:\n\nEmail: {$user->email}\n\nPassword: {$user->password}\n\nPlease go to:\n\n $link\n\n to log in\n\n");
+    	            $message->setFrom('noreply@elements-cms.com', 'Elements CMS');
+    	            $message->addTo($user->email);
+    	            $message->setSubject('New user account on Elements CMS');
+    	            $transport = new Sendmail();
+    	            $transport->send($message);    	            
+    	             
+    	        } else {
+    	            
+    	            // Send new user an email:
+    	            $message = new Message();
+    	            $link = 'http://'.$_SERVER['HTTP_HOST'];
+    	            $message->setBody("You are receiving this email because an account has been set up for you to log in to:\n\n http://".$_SERVER['HTTP_HOST'].".\n\n Your login details are:\n\nEmail: {$user->email}\n\nPassword: {$user->password}\n\nPlease go to:\n\n $link\n\n to log in\n\n");
+    	            $message->setFrom('noreply@elements-cms.com', $_SERVER['HTTP_HOST'] . ' Admin');
+    	            $message->addTo($user->email);
+    	            $message->setSubject($_SERVER['HTTP_HOST'] . ' Account Access Details');
+    	            $transport = new Sendmail();
+    	            $transport->send($message);
+    	             
+    	        }
+    	        
     	
     	        // Redirect to list of users
     	        return $this->redirect()->toRoute('admin-user');

@@ -36,7 +36,9 @@ class UsersTable
                 'last_name' => $user->last_name,
                 'email' => $user->email,
                 'password' => md5($user->password),
-                'role' => $user->role
+                'role' => $user->role,
+                'phone' => $user->phone,
+                'extension' => $user->extension
         );
     
         $id = (int)$user->id;

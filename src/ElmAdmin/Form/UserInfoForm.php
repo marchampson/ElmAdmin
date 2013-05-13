@@ -49,10 +49,16 @@ class UserInfoForm extends Form implements InputFilterProviderInterface
 		$password = new Element\Password('password');
 		$password->setLabel('Password')
 		->setAttributes(array('maxlength' => 128, 'size' => 40));
+		
+		$phone = new Element\Text('phone');
+		$phone->setLabel('Phone #');
+		
+		$extension = new Element\Text('extension');
+		$extension->setLabel('Extension #');
 
 		$role = new Element\Select('role');
 		$role->setLabel('Role')
-			   ->setOptions(array('options' => array('user' => 'user', 'admin' => 'admin')));
+			   ->setOptions(array('options' => array('account' => 'account', 'user' => 'user', 'admin' => 'admin')));
 		
 		
 		$this->fieldsetArray = array(

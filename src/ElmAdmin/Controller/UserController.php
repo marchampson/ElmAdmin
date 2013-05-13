@@ -60,6 +60,7 @@ class UserController extends AbstractActionController
                     ),
     	     );
     	}
+
   
     	$view = new ViewModel(array('data' => json_encode($usersArray),
                                     'bData' => array('url' => '/elements/admin/user/add', 'text' => 'Add User', 'namespace' => 'user')));
@@ -110,7 +111,6 @@ class UserController extends AbstractActionController
     	$message = '';
     	$data = '';
     	$form = $this->getServiceLocator()->get('ElmAdmin\Form\UserInfoForm');
-    	$form->get('submit')->setValue('Add');
     	
     	$request = $this->getRequest();
     	if ($request->isPost()) {
@@ -152,8 +152,10 @@ class UserController extends AbstractActionController
     	        return $this->redirect()->toRoute('admin-user');
     	    }
     	}
-    	
-        return new ViewModel(array('form' => $form, 'data' => $data, 'message' => $message));
+        $this->layout('layout/forms');
+    	$view = new ViewModel(array('form' => $form, 'data' => $data, 'message' => $message)); 
+        $view->setTemplate('elm-content/webpage/add');
+        return $view;
     }
     
     public function editAction()

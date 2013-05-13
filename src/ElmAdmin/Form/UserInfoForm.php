@@ -69,15 +69,20 @@ class UserInfoForm extends Form implements InputFilterProviderInterface
 		                'last_name',
 		                'email',
 		                'password',
+		                'phone',
+		                'extension',
 		                'role',
 		        ),
 		);
 
-		$this->add($group_id)
+		$this->add($id)
+			 ->add($group_id)
 		     ->add($first_name)
 		     ->add($last_name)
 		     ->add($email)
 		     ->add($password)
+		     ->add($phone)
+		     ->add($extension)
 			 ->add($role);
 	}
 

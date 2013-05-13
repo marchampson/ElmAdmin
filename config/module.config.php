@@ -24,6 +24,7 @@ $config = array(
     ),
 	'router' => array(
         'routes' => array(
+            /*
             'admin' => array(
                 'type'    => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
@@ -39,6 +40,7 @@ $config = array(
                     ),
                 ),
             ),
+            */
             'admin-user' => array(
                     'type' => 'segment',
                     'options' => array(

@@ -1,12 +1,17 @@
 <?php
 namespace ElmAdmin\Form;
 
-use Zend\Form\Form;
-use Zend\Form\Element;
+use Zend\Form\Form as Form;
+use Zend\Form\Fieldset;
+use Zend\Form\Element as Element;
+use Zend\InputFilter\InputFilterProviderInterface;
+use Zend\InputFilter\InputFilter;
 
-class UserInfoForm extends Form
+
+class UserInfoForm extends Form implements InputFilterProviderInterface
 {
     protected $groups;
+    protected $fieldsetArray;
 
     public function setGroupsService(\ElmAdmin\Service\GroupsService $service)
     {
@@ -22,13 +27,12 @@ class UserInfoForm extends Form
     {
         // we want to ignore the name passed
         parent::__construct('user');
+        $this->setAttribute('method', 'post');
         
-        $this->add(array(
-                'name' => 'id',
-                'attributes' => array(
-                        'type'  => 'hidden',
-                ),
-        ));
+        /*
+	     * Hidden Elements
+	     */
+	    $id = new Element\Hidden('id');
         
         $group_id = new Element\Select('group_id');
         $group_id->setLabel('User group');
@@ -51,19 +55,41 @@ class UserInfoForm extends Form
 			   ->setOptions(array('options' => array('user' => 'user', 'admin' => 'admin')));
 		
 		
-		$password = new Element\Password('password');
-		$password->setLabel('Password')
-				 ->setAttributes(array('maxlength' => 128, 'size' => 40));
-		
-		$submit = new Element\Submit('submit');
-		$submit->setAttribute('value', 'Edit');
+		$this->fieldsetArray = array(
+		        'Details' => array(
+		                'id',
+		                'group_id',
+		                'first_name',
+		                'last_name',
+		                'email',
+		                'password',
+		                'role',
+		        ),
+		);
 
 		$this->add($group_id)
 		     ->add($first_name)
 		     ->add($last_name)
 		     ->add($email)
 		     ->add($password)
-			 ->add($role)
-			 ->add($submit);
+			 ->add($role);
+	}
+
+	public function getFieldsetArray()
+	{
+	    return $this->fieldsetArray;
+	}
+	
+	/**
+	 * @return array
+	 */
+	public function getInputFilterSpecification()
+	{
+	    return array(
+	            'group_id' => array(
+	                    'required' => false,
+	
+	            )
+	    );
 	}
 }

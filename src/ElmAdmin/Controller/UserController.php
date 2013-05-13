@@ -40,32 +40,30 @@ class UserController extends AbstractActionController
     	foreach($users as $user) {
     	    $usersArray[] = array(
     	            'rowId' => $user->id,
-    	            'cells' => array(
-    	                        array("value" => $user->first_name . ' ' . $user->last_name,
-    	                              "type" => 'string'),
-    	                        array("value" => $user->email,
-    	                              'type' => 'string'),
-    	                        array('value' => $user->group_id,
-    	                              'type' => 'string'),
-    	                        array('value' => $user->role,
-    	                              'type' => 'string'),
-    	                        array('type' => 'actions',
-    	                               'actions' => array(
-    	                    array('url' => '/elements/admin/user/edit/'.$user->id,
-    	                            'type' => 'btn-warning edit',
-    	                            'text' => 'Edit'),
-    	                    array('url' => '/elements/admin/user/delete/'.$user->id,
-    	                            'type' => 'btn-danger delete',
-    	                            'text' => 'Delete')
-    	                                       )
-    	                                )
-    	            )
+                    'heading' => array(
+                            array('value' => $user->first_name . ' ' . $user->last_name, 'type' => 'string', 'span' => 2),
+                            array('value' => $user->email, 'type' => 'string', 'span' => 2),
+                            array('value' => $user->group_id, 'type' => 'string', 'span' => 1),
+                            array('value' => $user->role, 'type' => 'string', 'span' => 2),
+                            array('type' => 'actions',
+                                    'span' => 3,
+                                    'actions' => array(
+                                            array('url' => '/elements/admin/user/edit/'.$user->id,
+                                                    'type' => 'edit',
+                                                    'text' => 'Edit'),
+                                            array('url' => '/elements/admin/user/delete/'.$user->id,
+                                                    'type' => 'delete',
+                                                    'text' => 'Delete')
+                                    ),
+        
+                            )
+                    ),
     	     );
     	}
-    	$jsonArray['data'] = $usersArray;
   
-    	$view = new ViewModel(array('data' => json_encode($jsonArray)));
-    	$view->setTemplate('elm-content/item/list.phtml');
+    	$view = new ViewModel(array('data' => json_encode($usersArray),
+                                    'bData' => array('url' => '/elements/admin/user/add', 'text' => 'Add User', 'namespace' => 'user')));
+    	$view->setTemplate('elm-content/webpage/list.phtml');
         return $view;
     }
 

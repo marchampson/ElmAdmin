@@ -14,6 +14,7 @@ $config = array(
         'invokables' => array(
             'admin-user' => 'ElmAdmin\Controller\UserController',
             'admin-group' => 'ElmAdmin\Controller\GroupController',
+            'admin-form' => 'ElmAdmin\Controller\FormController'
         ),
     ),
         
@@ -66,6 +67,20 @@ $config = array(
                             'defaults' => array(
                                     'controller' => 'admin-group',
                                     'action' => 'index'
+                            )
+                    )
+            ),
+            'admin-form-settings' => array(
+                    'type' => 'segment',
+                    'options' => array(
+                            'route' => '/elements/admin/form[/:action][/:id]',
+                            'constraints' => array(
+                                    'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                                    'id' => '[0-9]+'
+                            ),
+                            'defaults' => array(
+                                    'controller' => 'admin-form',
+                                    'action' => 'list'
                             )
                     )
             ),

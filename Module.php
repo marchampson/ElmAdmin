@@ -8,6 +8,9 @@ use ElmAdmin\Model\User;
 use ElmAdmin\Model\UsersTable;
 use ElmAdmin\Model\Group;
 use ElmAdmin\Model\GroupsTable;
+use ElmAdmin\Model\Forms;
+use ElmAdmin\Model\FormsTable;
+use ElmAdmin\Model\FormSettingsTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -74,6 +77,26 @@ class Module implements AutoloaderProviderInterface
                         
                         
                             return $form;
+                        },
+                        'ElmAdmin\Model\FormsTable' =>  function($sm) {
+                            $tableGateway = $sm->get('FormsTableGateway');
+                            $table = new FormsTable($tableGateway);
+                            return $table;
+                        },
+                        'FormsTableGateway' => function ($sm) {
+                            $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                            $resultSetPrototype = new ResultSet();
+                            $resultSetPrototype->setArrayObjectPrototype(new Forms());
+                            return new TableGateway('forms', $dbAdapter, null, $resultSetPrototype);
+                        },
+                        'ElmAdmin\Model\FormSettingsTable' =>  function($sm) {
+                            $tableGateway = $sm->get('FormSettingsTableGateway');
+                            $table = new FormSettingsTable($tableGateway);
+                            return $table;
+                        },
+                        'FormSettingsTableGateway' => function ($sm) {
+                            $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                            return new TableGateway('form_settings', $dbAdapter, null);
                         },
                 ),
         );

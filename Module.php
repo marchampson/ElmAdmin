@@ -98,6 +98,12 @@ class Module implements AutoloaderProviderInterface
                             $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                             return new TableGateway('form_settings', $dbAdapter, null);
                         },
+
+                        'form_utility' => function ($sm) {
+                        $formUtility = new \ElmContent\Utilities\FormUtils();
+                        $formUtility->setServiceLocator($sm);
+                        return $formUtility;
+                    },
                 ),
         );
     }

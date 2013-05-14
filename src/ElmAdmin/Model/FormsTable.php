@@ -27,6 +27,13 @@ class FormsTable
         }
         return $row;
     }
+
+    public function getFormByAlias($alias)
+    {
+        $rowset = $this->tableGateway->select(array('alias' => $alias));
+        $row = $rowset->current();
+        return $row;
+    }
     
     public function saveForm(Forms $form)
     {

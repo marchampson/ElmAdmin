@@ -47,6 +47,7 @@ class FormsTable
         $id = (int)$form->id;
         if ($id == 0) {
             $this->tableGateway->insert($data);
+            $id = $this->tableGateway->lastInsertValue;
         } else {
             if ($this->getForm($id)) {
                 $this->tableGateway->update($data, array('id' => $id));
@@ -54,6 +55,8 @@ class FormsTable
                 throw new \Exception('Form id does not exist');
             }
         }
+
+        return $id;
     }
     
     public function deleteForm($id)

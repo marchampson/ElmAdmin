@@ -34,6 +34,13 @@ class FormsTable
         $row = $rowset->current();
         return $row;
     }
+
+    public function getFormByName($name)
+    {
+        $rowset = $this->tableGateway->select(array('name' => $name));
+        $row = $rowset->current();
+        return $row;
+    }
     
     public function saveForm(Forms $form)
     {

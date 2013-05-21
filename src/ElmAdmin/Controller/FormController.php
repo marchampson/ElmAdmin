@@ -168,7 +168,7 @@ class FormController extends AbstractActionController
         // due to the db structure
         $page = $this->getFormsTable()->getForm($id);
         
-        $form = new \ElmAdmin\Form\FormSettingsForm;
+        $form = new \ElmAdmin\Form\FormSettingsForm(null, $page->alias);
         
         $form->bind($page);
         

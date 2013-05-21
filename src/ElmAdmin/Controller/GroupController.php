@@ -58,7 +58,7 @@ class GroupController extends AbstractActionController
     	$jsonArray['data'] = $groupsArray;
   
     	$view = new ViewModel(array('data' => json_encode($jsonArray)));
-    	$view->setTemplate('elm-content/item/list.phtml');
+    	$view->setTemplate('elm-content/webpage/list.phtml');
         return $view;
     }
     

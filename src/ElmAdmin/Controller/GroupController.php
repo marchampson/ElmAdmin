@@ -57,7 +57,9 @@ class GroupController extends AbstractActionController
     	}
     	$jsonArray['data'] = $groupsArray;
   
-    	$view = new ViewModel(array('data' => json_encode($jsonArray)));
+    	$view = new ViewModel(array('data' => json_encode($jsonArray),
+    								'bData' => array('url' => '/elements/admin/group/add', 'text' => 'Add Group', 'namespace' => 'group')
+    	));
     	$view->setTemplate('elm-content/webpage/list.phtml');
         return $view;
     }
@@ -67,7 +69,7 @@ class GroupController extends AbstractActionController
     	$message = '';
     	$data = '';
     	$form = new GroupForm();
-    	$form->get('submit')->setValue('Add');
+    	
     	
     	$request = $this->getRequest();
     	if ($request->isPost()) {
@@ -84,7 +86,10 @@ class GroupController extends AbstractActionController
     	    }
     	}
     	
-        return new ViewModel(array('form' => $form, 'data' => $data, 'message' => $message));
+        $view = new ViewModel(array('form' => $form, 'data' => $data, 'message' => $message));
+        $this->layout('layout/forms');
+        $view->setTemplate('elm-content/webpage/add');
+        return $view;
     }
     
     public function editAction()

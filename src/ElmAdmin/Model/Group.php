@@ -11,6 +11,7 @@ class Group implements InputFilterAwareInterface
 	public $id;
 	public $type;
 	public $name;
+	public $reference;
 	public $address1;
 	public $address2;
 	public $town;
@@ -25,6 +26,7 @@ class Group implements InputFilterAwareInterface
 	    $this->id     = (isset($data['id']))     ? $data['id']     : null;
 	    $this->type = (isset($data['type'])) ? $data['type'] : null;
 	    $this->name  = (isset($data['name']))  ? $data['name']  : null;
+	    $this->reference  = (isset($data['reference']))  ? $data['reference']  : null;
 	    $this->address1  = (isset($data['address1']))  ? $data['address1']  : null;
 	    $this->address2  = (isset($data['address2']))  ? $data['address2']  : null;
 	    $this->town  = (isset($data['town']))  ? $data['town']  : null;

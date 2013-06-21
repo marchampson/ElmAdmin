@@ -28,6 +28,9 @@ class GroupForm extends Form implements InputFilterProviderInterface
 		$type = new Element\Select('type');
 		$type->setLabel('Group Type')
 			   ->setOptions(array('options' => array('' => 'Select one', 'company' => 'Company', 'team' => 'Team')));
+		
+		$reference = new Element\Text('reference');
+		$reference->setLabel('Referemce');
 
 		$name = new Element\Text('name');
 		$name->setLabel('Name');

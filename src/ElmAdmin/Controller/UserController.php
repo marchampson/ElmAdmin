@@ -173,7 +173,6 @@ class UserController extends AbstractActionController
         // Passwords are md5 encrypted so remove from the edit field
         // Changes are handled by the user in a different process.
         $form->remove('password');
-        $form->get('submit')->setAttribute('value', 'Edit');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -189,7 +188,10 @@ class UserController extends AbstractActionController
         } else {
             $data = $request->getPost();
         }
-        return new ViewModel(array('id' => $id, 'form' => $form, 'data' => $data, 'message' => $message));
+        $view = new ViewModel(array('id' => $id, 'form' => $form, 'data' => $data, 'message' => $message));
+        $this->layout('layout/forms');
+        $view->setTemplate('elm-content/webpage/add');
+        return $view;
     }
 
     public function getUsersTable()

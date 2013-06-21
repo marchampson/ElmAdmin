@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   `name` varchar(100) COLLATE utf8_bin DEFAULT NULL,
+  `reference` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   `address1` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   `address2` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   `town` varchar(100) COLLATE utf8_bin DEFAULT NULL,
@@ -44,8 +45,8 @@ CREATE TABLE IF NOT EXISTS `groups` (
 -- Dumping data for table `groups`
 --
 
-INSERT INTO `groups` (`id`, `type`, `name`, `address1`, `address2`, `town`, `county`, `postcode`, `country`) VALUES
-(5, 'company', 'Oxygen', '12a Churchyard', NULL, 'Hitchin', 'Herts', 'SG5 1HR', 'UK');
+INSERT INTO `groups` (`id`, `type`, `name`, `reference`, `address1`, `address2`, `town`, `county`, `postcode`, `country`) VALUES
+(5, 'company', 'Oxygen', '', '12a Churchyard', NULL, 'Hitchin', 'Herts', 'SG5 1HR', 'UK');
 
 -- --------------------------------------------------------
 

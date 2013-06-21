@@ -33,6 +33,7 @@ class GroupsTable
         $data = array(
                 'type' => $group->type,
                 'name' => $group->name,
+                'reference' => $group->reference,
                 'address1' => $group->address1,
                 'address2' => $group->address2,
                 'town' => $group->town,

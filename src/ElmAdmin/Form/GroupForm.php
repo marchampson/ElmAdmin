@@ -378,6 +378,7 @@ class GroupForm extends Form implements InputFilterProviderInterface
 						'id',
 						'type',
 						'name',
+				        'reference',
 						'address1',
 						'address2',
 						'town',
@@ -389,6 +390,7 @@ class GroupForm extends Form implements InputFilterProviderInterface
 
 		$this->add($type)
 			 ->add($name)
+			 ->add($reference)
 			 ->add($address1)
 			 ->add($address2)
 			 ->add($town)

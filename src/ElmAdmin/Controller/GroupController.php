@@ -37,27 +37,27 @@ class GroupController extends AbstractActionController
     	foreach($groups as $group) {
     	    $groupsArray[] = array(
     	            'rowId' => $group->id,
-    	            'cells' => array(
+    	            'heading' => array(
     	                        array("value" => $group->type,
-    	                              "type" => 'string'),
+    	                              "type" => 'string', 'span' => 4),
     	                        array("value" => $group->name,
-    	                              'type' => 'string'),
+    	                              'type' => 'string', 'span' => 3),
     	                        array('type' => 'actions',
+    	                               'span' => 3,
     	                               'actions' => array(
     	                    array('url' => '/elements/admin/group/edit/'.$group->id,
-    	                            'type' => 'btn-warning edit',
+    	                            'type' => 'edit',
     	                            'text' => 'Edit'),
     	                    array('url' => '/elements/admin/group/delete/'.$group->id,
-    	                            'type' => 'btn-danger delete',
+    	                            'type' => 'delete',
     	                            'text' => 'Delete')
     	                                       )
     	                                )
     	            )
     	     );
     	}
-    	$jsonArray['data'] = $groupsArray;
   
-    	$view = new ViewModel(array('data' => json_encode($jsonArray),
+    	$view = new ViewModel(array('data' => json_encode($groupsArray),
     								'bData' => array('url' => '/elements/admin/group/add', 'text' => 'Add Group', 'namespace' => 'group')
     	));
     	$view->setTemplate('elm-content/webpage/list.phtml');
@@ -104,7 +104,6 @@ class GroupController extends AbstractActionController
         $group = $this->getGroupsTable()->getGroup($id);
         $form = new GroupForm();
         $form->bind($group);
-        $form->get('submit')->setAttribute('value', 'Edit');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -120,7 +119,10 @@ class GroupController extends AbstractActionController
         } else {
             $data = $request->getPost();
         }
-        return new ViewModel(array('id' => $id, 'form' => $form, 'data' => $data, 'message' => $message));
+        $view = new ViewModel(array('id' => $id, 'form' => $form, 'message' => $message));
+        $this->layout('layout/forms');
+        $view->setTemplate('elm-content/webpage/add');
+        return $view;
     }
     
     public function deleteAction()

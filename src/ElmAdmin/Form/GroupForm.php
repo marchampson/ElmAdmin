@@ -30,7 +30,7 @@ class GroupForm extends Form implements InputFilterProviderInterface
 			   ->setOptions(array('options' => array('' => 'Select one', 'company' => 'Company', 'team' => 'Team')));
 		
 		$reference = new Element\Text('reference');
-		$reference->setLabel('Referemce');
+		$reference->setLabel('Reference');
 
 		$name = new Element\Text('name');
 		$name->setLabel('Name');
@@ -47,6 +47,7 @@ class GroupForm extends Form implements InputFilterProviderInterface
 		$county = new Element\Select('county');
 		$county->setLabel('County');
 		$countiesArray = array(
+		        "" => "Select one",
 		        "Avon"=>"Avon",
 		        "Bedfordshire"=>"Bedfordshire",
 		        "Berkshire"=>"Berkshire",
@@ -118,8 +119,8 @@ class GroupForm extends Form implements InputFilterProviderInterface
 		        "Wiltshire"=>"Wiltshire",
 		        "Worcestershire"=>"Worcestershire"
 		);
-		$optionsArray = array_merge(array('' => 'Select one'), $countiesArray);
-        $county->setOptions(array('options'=>$optionsArray));		
+		//$optionsArray = array_merge(array('' => 'Select one'), $countiesArray);
+        $county->setOptions(array('options'=>$countiesArray));		
 		    		
 		$postcode = new Element\Text('postcode');
 		$postcode->setLabel('Postcode');
@@ -127,6 +128,7 @@ class GroupForm extends Form implements InputFilterProviderInterface
 		$country = new Element\Select('country');
 		$country->setLabel('Country');
 		$countriesArray = array(
+		        '' => 'Select one',
 				'AD' => 'Andorra',
 				'AE' => 'United Arab Emirates',
 				'AF' => 'Afghanistan',
@@ -201,7 +203,6 @@ class GroupForm extends Form implements InputFilterProviderInterface
 				'FO' => 'Faroe Islands',
 				'FR' => 'France',
 				'GA' => 'Gabon',
-				'GB' => 'United Kingdom (GB)',
 				'GD' => 'Grenada',
 				'GE' => 'Georgia',
 				'GF' => 'French Guiana',
@@ -352,6 +353,7 @@ class GroupForm extends Form implements InputFilterProviderInterface
 				'UA' => 'Ukraine',
 				'UG' => 'Uganda',
 				'UM' => 'US Minor Outlying Islands',
+		        'GB' => 'United Kingdom (GB)',
 				'US' => 'United States',
 				'UY' => 'Uruguay',
 				'UZ' => 'Uzbekistan',
@@ -388,7 +390,8 @@ class GroupForm extends Form implements InputFilterProviderInterface
 				),
 		);
 
-		$this->add($type)
+		$this->add($id)
+		     ->add($type)
 			 ->add($name)
 			 ->add($reference)
 			 ->add($address1)

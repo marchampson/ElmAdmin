@@ -44,6 +44,7 @@ class UsersTable
         $id = (int)$user->id;
         if ($id == 0) {
             $this->tableGateway->insert($data);
+            $id = $this->tableGateway->lastInsertValue;
         } else {
             if ($this->getUser($id)) {
                 $this->tableGateway->update($data, array('id' => $id));
@@ -51,6 +52,8 @@ class UsersTable
                 throw new \Exception('Form id does not exist');
             }
         }
+        
+        return $id;
     }
     
     public function deleteUser($id)

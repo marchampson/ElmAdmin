@@ -166,11 +166,11 @@ class GroupForm extends Form implements InputFilterProviderInterface
 				'BZ' => 'Belize',
 				'CA' => 'Canada',
 				'CC' => 'Cocos (keeling) Islands',
-				'CD' => 'Congo, Democratic PeopleÍs Republic',
+				'CD' => 'Congo, Democratic Peopleï¿½s Republic',
 				'CF' => 'Central African Republic',
 				'CG' => 'Congo, Republic of',
 				'CH' => 'Switzerland',
-				'CI' => 'Cote dÍIvoire',
+				'CI' => 'Cote dï¿½Ivoire',
 				'CK' => 'Cook Islands',
 				'CL' => 'Chile',
 				'CM' => 'Cameroon',
@@ -246,12 +246,12 @@ class GroupForm extends Form implements InputFilterProviderInterface
 				'KI' => 'Kiribati',
 				'KM' => 'Comoros',
 				'KN' => 'Saint Kitts and Nevis',
-				'KP' => 'Korea, Democratic PeopleÍs Republic',
+				'KP' => 'Korea, Democratic Peopleï¿½s Republic',
 				'KR' => 'Korea, Republic of',
 				'KW' => 'Kuwait',
 				'KY' => 'Cayman Islands',
 				'KZ' => 'Kazakhstan',
-				'LA' => 'Lao PeopleÍs Democratic Republic',
+				'LA' => 'Lao Peopleï¿½s Democratic Republic',
 				'LB' => 'Lebanon',
 				'LC' => 'Saint Lucia',
 				'LI' => 'Liechtenstein',
@@ -415,6 +415,10 @@ class GroupForm extends Form implements InputFilterProviderInterface
 	{
 		return array(
 				'group_id' => array(
+						'required' => false,
+	
+				),
+                                'county' => array(
 						'required' => false,
 	
 				)

@@ -41,13 +41,6 @@ CREATE TABLE IF NOT EXISTS `groups` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=6 ;
 
---
--- Dumping data for table `groups`
---
-
-INSERT INTO `groups` (`id`, `type`, `name`, `reference`, `address1`, `address2`, `town`, `county`, `postcode`, `country`) VALUES
-(5, 'company', 'Oxygen', '', '12a Churchyard', NULL, 'Hitchin', 'Herts', 'SG5 1HR', 'UK');
-
 -- --------------------------------------------------------
 
 --
@@ -67,17 +60,3 @@ CREATE TABLE IF NOT EXISTS `users` (
   `extension` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `group_id`, `password`, `first_name`, `last_name`, `email`, `role`, `phone`, `extension`) VALUES
-(21, 5, '0fe2a1ffdaa9d9d99b9dfa23c2001db8', 'Marc', 'Hampson', 'marc.hampson@oxygenate.net', 'hal9000', '01462 636800', NULL),
-(22, 5, '0fe2a1ffdaa9d9d99b9dfa23c2001db8', 'Joel', 'Ide', 'joel.ide@oxygenate.net', 'hal9000', '01462 636800', NULL),
-(23, 5, '0fe2a1ffdaa9d9d99b9dfa23c2001db8', 'Geoff', 'Ide', 'geoff.ide@oxygenate.net', 'Admin', '01462 636800', NULL),
-(24, 5, '0fe2a1ffdaa9d9d99b9dfa23c2001db8', 'Marcia', 'Smith', 'marcia.smith@oxygenate.net', 'hal9000', '01462 636800', NULL);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

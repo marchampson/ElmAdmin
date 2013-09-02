@@ -28,6 +28,16 @@ class UsersTable
         return $row;
     }
     
+    public function getUserByEmail($email)
+    {
+        $rowset = $this->tableGateway->select(array('email' => $email));
+        $row = $rowset->current();
+        if (!$row) {
+            throw new \Exception("Could not find row by $email");
+        }
+        return $row;
+    }
+    
     public function saveUser(User $user)
     {
         $data = array(
